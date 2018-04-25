@@ -1,0 +1,22 @@
+{
+  "name": "bsadnu/grand-id-bundle",
+  "description": "Symfony bundle to use Grand ID service https://www.grandid.com/",
+  "keywords": ["Grand ID", "symfony"],
+  "type": "symfony-bundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name":     "Stas Bannikov",
+      "email":    "sab.ukraine@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.0",
+    "symfony/framework-bundle": "^3.4|^4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Bsadnu\\GrandIDBundle\\": ""
+    }
+  }
+}
