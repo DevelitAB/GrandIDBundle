@@ -1,6 +1,6 @@
 <?php
 
-namespace Bsadnu\GrandIDBundle\Service;
+namespace Bsadnu\GrandIDBundle\Services;
 
 class GrandID
 {

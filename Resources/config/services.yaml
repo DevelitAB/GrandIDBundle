@@ -1,8 +1,8 @@
 services:
     bsadnu.grand_id:
-        alias: Bsadnu\GrandIDBundle\Service\GrandID
+        alias: Bsadnu\GrandIDBundle\Services\GrandID
         public: true
-    Bsadnu\GrandIDBundle\Service\GrandID:
+    Bsadnu\GrandIDBundle\Services\GrandID:
         public: false
         arguments:
             - '%bsadnu.grand_id.config%'
