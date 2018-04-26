@@ -8,11 +8,6 @@ use GuzzleHttp\Client as HttpClient;
 
 class GrandID
 {
-    const ERR_OBJ_CODES = [
-            'APIKEYNOTVALID01',
-            'FIELDSNOTVALID',
-        ];
-
     /**
      * @var array
      */
