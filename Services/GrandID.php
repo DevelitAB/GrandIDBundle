@@ -90,7 +90,14 @@ class GrandID
 
         $response = $this->httpClient->request('GET', $uri);
 
-        return json_decode($response->getBody());
+        $decodedResponseBody = json_decode($response->getBody());
+
+        $output = null;
+        if (property_exists($decodedResponseBody, 'username')) {
+            $output = new SuccessfulSession($decodedResponseBody->sessionId, $decodedResponseBody->username);
+        }
+
+        return $output;
     }
 
     public function logout($sessionId)
