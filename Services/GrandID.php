@@ -84,7 +84,7 @@ class GrandID
         return $output;
     }
 
-    public function federatedDirectLogin($username, $password)
+    public function federatedDirectLogin($username, $password): ?SuccessfulSession
     {
         $uri = $this->baseUrl . 'FederatedDirectLogin?authenticateServiceKey=' . $this->authenticateServiceKey . '&apiKey=' . $this->apiKey . '&username=' . $username . '&password=' . $password;
 
@@ -100,16 +100,22 @@ class GrandID
         return $output;
     }
 
-    public function logout($sessionId)
+    public function logout($sessionId): bool
     {
         $uri = $this->baseUrl . 'Logout?authenticateServiceKey=' . $this->authenticateServiceKey . '&apiKey=' . $this->apiKey . '&sessionid=' . $sessionId;
 
         $response = $this->httpClient->request('GET', $uri);
 
-        return json_decode($response->getBody());
+        $decodedResponseBody = json_decode($response->getBody());
+
+        if (property_exists($decodedResponseBody, 'sessiondeleted') && ('1' == $decodedResponseBody->sessiondeleted)) {
+            return true;
+        }
+
+        return false;
     }
 
-    public function getSession($sessionId)
+    public function getSession($sessionId): ?SuccessfulSession
     {
         $uri = $this->baseUrl . 'GetSession?authenticateServiceKey=' . $this->authenticateServiceKey . '&apiKey=' . $this->apiKey . '&sessionid=' . $sessionId;
 
