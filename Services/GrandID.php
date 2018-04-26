@@ -3,6 +3,7 @@
 namespace Bsadnu\GrandIDBundle\Services;
 
 use Bsadnu\GrandIDBundle\DTO\FederatedLogin;
+use Bsadnu\GrandIDBundle\DTO\SuccessfulSession;
 use GuzzleHttp\Client as HttpClient;
 
 class GrandID
@@ -107,13 +108,13 @@ class GrandID
 
         $response = $this->httpClient->request('GET', $uri);
 
-        return json_decode($response->getBody());
-    }
+        $decodedResponseBody = json_decode($response->getBody());
 
-    public function isLoginSuccessful($sessionId)
-    {
-        $sessionObject = $this->getSession($sessionId);
+        $output = null;
+        if (property_exists($decodedResponseBody, 'username')) {
+            $output = new SuccessfulSession($decodedResponseBody->sessionId, $decodedResponseBody->username);
+        }
 
-        return property_exists($sessionObject, 'username');
+        return $output;
     }
 }
