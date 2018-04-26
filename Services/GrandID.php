@@ -2,6 +2,7 @@
 
 namespace Bsadnu\GrandIDBundle\Services;
 
+use Bsadnu\GrandIDBundle\DTO\FederatedLogin;
 use GuzzleHttp\Client as HttpClient;
 
 class GrandID
@@ -66,13 +67,20 @@ class GrandID
         $this->config = $config;
     }
 
-    public function federatedLogin($callbackUrl)
+    public function federatedLogin($callbackUrl): ?FederatedLogin
     {
         $uri = $this->baseUrl . 'FederatedLogin?authenticateServiceKey=' . $this->authenticateServiceKey . '&apiKey=' . $this->apiKey . '&callbackUrl=' . $callbackUrl;
 
         $response = $this->httpClient->request('GET', $uri);
 
-        return json_decode($response->getBody());
+        $decodedResponseBody = json_decode($response->getBody());
+
+        $output = null;
+        if (property_exists($decodedResponseBody, 'sessionId')) {
+            $output = new FederatedLogin($decodedResponseBody->sessionId, $decodedResponseBody->redirectUrl);
+        }
+
+        return $output;
     }
 
     public function federatedDirectLogin($username, $password)
