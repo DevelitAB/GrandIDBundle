@@ -146,9 +146,7 @@ class GrandID
     public function getSession($sessionId): ?SuccessfulSession
     {
         $uri = $this->baseUrl . 'GetSession?authenticateServiceKey=' . $this->authenticateServiceKey . '&apiKey=' . $this->apiKey . '&sessionid=' . $sessionId;
-
         $response = $this->httpClient->request('GET', $uri);
-
         $decodedResponseBody = json_decode($response->getBody());
 
         $output = null;
@@ -170,6 +168,32 @@ class GrandID
         }
 
         return $output;
+    }
+
+    public function attachUsernameToMockSession($sessionId, $username): void
+    {
+        $session = $this->getMockSessionFromStorage($sessionId);
+        $session->setUsername($username);
+        $session->setUpdatedAt(new \DateTime);
+
+        $this->entityManager->persist($session);
+        $this->entityManager->flush();
+    }
+
+    public function logInMockSession($sessionId): bool
+    {
+        $session = $this->getMockSessionFromStorage($sessionId);
+        if (!is_null($session->getUsername()) && $session->getIsMock()) {
+            $session->setIsLoggedIn(true);
+            $session->setUpdatedAt(new \DateTime);
+
+            $this->entityManager->persist($session);
+            $this->entityManager->flush();
+
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private function addSessionToStorage($sessionId, bool $isMock, $redirectUrl = null, $isLoggedIn = false, $username = null): void
