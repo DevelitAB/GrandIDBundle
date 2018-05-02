@@ -98,7 +98,7 @@ class GrandID
 
         $this->addSessionToStorage($sessionId, true, $redirectUrl);
 
-        $output = new FederatedLogin($this->generateRandomSessionId(), $redirectUrl);
+        $output = new FederatedLogin($sessionId, $redirectUrl);
 
         return $output;
     }
@@ -117,7 +117,7 @@ class GrandID
 
             $this->addSessionToStorage($sessionId, false, null, true, $responseUsername);
 
-            $output = new SuccessfulSession($decodedResponseBody->sessionId, $decodedResponseBody->username);
+            $output = new SuccessfulSession($sessionId, $responseUsername);
         }
 
         return $output;
