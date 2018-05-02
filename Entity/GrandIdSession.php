@@ -28,7 +28,7 @@ class GrandIdSession
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=1024)
+     * @ORM\Column(type="string", nullable=true, length=1024)
      */
     private $redirectUrl;
 
@@ -43,6 +43,11 @@ class GrandIdSession
      * @ORM\Column(type="boolean")
      */
     private $isLoggedIn = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isMock = false;
 
     /**
      * @ORM\Column(type="datetime")
@@ -127,6 +132,22 @@ class GrandIdSession
     public function setIsLoggedIn(bool $isLoggedIn): void
     {
         $this->isLoggedIn = $isLoggedIn;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsMock(): bool
+    {
+        return $this->isMock;
+    }
+
+    /**
+     * @param bool $isMock
+     */
+    public function setIsMock(bool $isMock): void
+    {
+        $this->isMock = $isMock;
     }
 
     public function getCreatedAt(): \DateTime
