@@ -115,7 +115,7 @@ class GrandID
             $sessionId = $decodedResponseBody->sessionId;
             $responseUsername = $decodedResponseBody->username;
 
-            $this->addSessionToStorage($sessionId, false, null, false, $responseUsername);
+            $this->addSessionToStorage($sessionId, false, null, true, $responseUsername);
 
             $output = new SuccessfulSession($decodedResponseBody->sessionId, $decodedResponseBody->username);
         }
@@ -145,13 +145,19 @@ class GrandID
 
     public function getSession($sessionId): ?SuccessfulSession
     {
+        $output = null;
+
         $uri = $this->baseUrl . 'GetSession?authenticateServiceKey=' . $this->authenticateServiceKey . '&apiKey=' . $this->apiKey . '&sessionid=' . $sessionId;
         $response = $this->httpClient->request('GET', $uri);
         $decodedResponseBody = json_decode($response->getBody());
 
-        $output = null;
         if (property_exists($decodedResponseBody, 'username')) {
-            $output = new SuccessfulSession($decodedResponseBody->sessionId, $decodedResponseBody->username);
+            $responseSessionId = $decodedResponseBody->sessionId;
+            $username = $decodedResponseBody->username;
+
+            $this->enableSession($responseSessionId, $username);
+
+            $output = new SuccessfulSession($responseSessionId, $username);
         }
 
         return $output;
@@ -196,6 +202,17 @@ class GrandID
         }
     }
 
+    private function enableSession($sessionId, $username): void
+    {
+        $session = $this->getSessionFromStorage($sessionId);
+        $session->setUsername($username);
+        $session->setIsLoggedIn(true);
+        $session->setUpdatedAt(new \DateTime);
+
+        $this->entityManager->persist($session);
+        $this->entityManager->flush();
+    }
+
     private function addSessionToStorage($sessionId, bool $isMock, $redirectUrl = null, $isLoggedIn = false, $username = null): void
     {
         $grandIdSession = new GrandIdSession();
@@ -228,6 +245,17 @@ class GrandID
 
             return true;
         }
+    }
+
+    private function getSessionFromStorage($sessionId)
+    {
+        $repository = $this->entityManager->getRepository(GrandIdSession::class);
+
+        return $repository->findOneBy([
+            'externalId' => $sessionId,
+            'isMock' => false,
+        ]);
+
     }
 
     private function getMockSessionFromStorage($sessionId)
