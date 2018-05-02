@@ -6,3 +6,4 @@ services:
         public: false
         arguments:
             - '%bsadnu.grand_id.config%'
+            - '@doctrine.orm.entity_manager'
