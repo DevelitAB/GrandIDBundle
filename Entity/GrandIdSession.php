@@ -87,33 +87,33 @@ class GrandIdSession
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getRedirectUrl(): string
+    public function getRedirectUrl(): ?string
     {
         return $this->redirectUrl;
     }
 
     /**
-     * @param string $redirectUrl
+     * @param string|null $redirectUrl
      */
-    public function setRedirectUrl(string $redirectUrl): void
+    public function setRedirectUrl(?string $redirectUrl): void
     {
         $this->redirectUrl = $redirectUrl;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return $this->username;
     }
 
     /**
-     * @param string $username
+     * @param string|null $username
      */
-    public function setUsername(string $username): void
+    public function setUsername(?string $username): void
     {
         $this->username = $username;
     }
