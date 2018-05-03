@@ -98,7 +98,7 @@ class GrandID
 
         $this->addSessionToStorage($sessionId, true, $redirectUrl);
 
-        $output = new FederatedLogin($this->generateRandomSessionId(), $redirectUrl);
+        $output = new FederatedLogin($sessionId, $redirectUrl);
 
         return $output;
     }
@@ -115,9 +115,9 @@ class GrandID
             $sessionId = $decodedResponseBody->sessionId;
             $responseUsername = $decodedResponseBody->username;
 
-            $this->addSessionToStorage($sessionId, false, null, false, $responseUsername);
+            $this->addSessionToStorage($sessionId, false, null, true, $responseUsername);
 
-            $output = new SuccessfulSession($decodedResponseBody->sessionId, $decodedResponseBody->username);
+            $output = new SuccessfulSession($sessionId, $responseUsername);
         }
 
         return $output;
@@ -145,13 +145,19 @@ class GrandID
 
     public function getSession($sessionId): ?SuccessfulSession
     {
+        $output = null;
+
         $uri = $this->baseUrl . 'GetSession?authenticateServiceKey=' . $this->authenticateServiceKey . '&apiKey=' . $this->apiKey . '&sessionid=' . $sessionId;
         $response = $this->httpClient->request('GET', $uri);
         $decodedResponseBody = json_decode($response->getBody());
 
-        $output = null;
         if (property_exists($decodedResponseBody, 'username')) {
-            $output = new SuccessfulSession($decodedResponseBody->sessionId, $decodedResponseBody->username);
+            $responseSessionId = $decodedResponseBody->sessionId;
+            $username = $decodedResponseBody->username;
+
+            $this->enableSession($responseSessionId, $username);
+
+            $output = new SuccessfulSession($responseSessionId, $username);
         }
 
         return $output;
@@ -163,27 +169,21 @@ class GrandID
 
         $session = $this->getMockSessionFromStorage($sessionId);
 
-        if ($session && !is_null($session->getUsername())) {
+        if ($session && !is_null($session->getUsername()) && $session->getIsLoggedIn()) {
             $output = new SuccessfulSession($session->getExternalId(), $session->getUsername());
         }
 
         return $output;
     }
 
-    public function attachUsernameToMockSession($sessionId, $username): void
+    public function enableMockSession($sessionId, $username): bool
     {
         $session = $this->getMockSessionFromStorage($sessionId);
-        $session->setUsername($username);
-        $session->setUpdatedAt(new \DateTime);
 
-        $this->entityManager->persist($session);
-        $this->entityManager->flush();
-    }
-
-    public function logInMockSession($sessionId): bool
-    {
-        $session = $this->getMockSessionFromStorage($sessionId);
-        if (!is_null($session->getUsername()) && $session->getIsMock()) {
+        if (is_null($session)) {
+            return false;
+        } else {
+            $session->setUsername($username);
             $session->setIsLoggedIn(true);
             $session->setUpdatedAt(new \DateTime);
 
@@ -191,9 +191,18 @@ class GrandID
             $this->entityManager->flush();
 
             return true;
-        } else {
-            return false;
         }
+    }
+
+    private function enableSession($sessionId, $username): void
+    {
+        $session = $this->getSessionFromStorage($sessionId);
+        $session->setUsername($username);
+        $session->setIsLoggedIn(true);
+        $session->setUpdatedAt(new \DateTime);
+
+        $this->entityManager->persist($session);
+        $this->entityManager->flush();
     }
 
     private function addSessionToStorage($sessionId, bool $isMock, $redirectUrl = null, $isLoggedIn = false, $username = null): void
@@ -228,6 +237,17 @@ class GrandID
 
             return true;
         }
+    }
+
+    private function getSessionFromStorage($sessionId)
+    {
+        $repository = $this->entityManager->getRepository(GrandIdSession::class);
+
+        return $repository->findOneBy([
+            'externalId' => $sessionId,
+            'isMock' => false,
+        ]);
+
     }
 
     private function getMockSessionFromStorage($sessionId)
