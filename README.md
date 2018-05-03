@@ -108,7 +108,7 @@ class SomeController extends Controller
         
         $callBackUrl = 'https://domain.com/my/action'
 
-        $this->bankIdProvider->federatedLogin($callBackUrl);
+        $loginObject = $this->bankIdProvider->federatedLogin($callBackUrl);
 
         ...
     }   
