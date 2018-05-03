@@ -2,6 +2,10 @@ services:
     bsadnu.grand_id:
         alias: Bsadnu\GrandIDBundle\Services\GrandID
         public: true
+    Bsadnu\GrandIDBundle\Repository\GrandIdSessionRepository:
+        autowire: true
+        public: false
+        tags: ['doctrine.repository_service']        
     Bsadnu\GrandIDBundle\Services\GrandID:
         public: false
         arguments:

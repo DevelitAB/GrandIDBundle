@@ -127,8 +127,7 @@ class SomeController extends Controller
 * `logoutMock(string $sessionId)` - does not perform any API call. Just update certain DB record.
 * `getSession(string $sessionId)` - fetch session params by calling real API GetSession.
 * `getSessionMock(string $sessionId)` - fetch mock session params by from DB.
-* `attachUsernameToMockSession(string $sessionId, string $username)` - update mock session DB record by adding username.
-* `logInMockSession(string $sessionId)` - update mock session DB record by making is_logged_in as true.
+* `enableMockSession(string $sessionId, string $username)` - update mock session DB record by adding username and making is_logged_in equals to true.
 
 ## Acknowledgments
 * [Develit Software Development](https://www.develit.se)

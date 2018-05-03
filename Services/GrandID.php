@@ -176,20 +176,14 @@ class GrandID
         return $output;
     }
 
-    public function attachUsernameToMockSession($sessionId, $username): void
+    public function enableMockSession($sessionId, $username): bool
     {
         $session = $this->getMockSessionFromStorage($sessionId);
-        $session->setUsername($username);
-        $session->setUpdatedAt(new \DateTime);
 
-        $this->entityManager->persist($session);
-        $this->entityManager->flush();
-    }
-
-    public function logInMockSession($sessionId): bool
-    {
-        $session = $this->getMockSessionFromStorage($sessionId);
-        if (!is_null($session->getUsername()) && $session->getIsMock()) {
+        if (is_null($session)) {
+            return false;
+        } else {
+            $session->setUsername($username);
             $session->setIsLoggedIn(true);
             $session->setUpdatedAt(new \DateTime);
 
@@ -197,8 +191,6 @@ class GrandID
             $this->entityManager->flush();
 
             return true;
-        } else {
-            return false;
         }
     }
 
