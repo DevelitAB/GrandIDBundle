@@ -169,7 +169,7 @@ class GrandID
 
         $session = $this->getMockSessionFromStorage($sessionId);
 
-        if ($session && !is_null($session->getUsername())) {
+        if ($session && !is_null($session->getUsername()) && $session->getIsLoggedIn()) {
             $output = new SuccessfulSession($session->getExternalId(), $session->getUsername());
         }
 
