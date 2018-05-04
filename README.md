@@ -66,7 +66,7 @@ class AppKernel extends Kernel
 
 ## Configuration
 
-Add the `config/packages/grand_id.yaml` with settings as follows:
+Add the `config/packages/grand_id.yaml` file consists of settings as follows:
 
 ```yml
 grand_id:
