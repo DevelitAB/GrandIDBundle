@@ -268,6 +268,12 @@ class GrandID
 
     private function getRedirectUrlBySessionId($sessionId, $callbackUrl, $host, $protocol = 'https'): string
     {
-        return $protocol . '://' . $host . '?redirect=' . $callbackUrl . '?grandidsession=' . $sessionId;
+        $path = $protocol . '://' . $host;
+        
+        if (is_null($callbackUrl)) {
+            return $path . '?redirect=null';
+        } else {
+            return $path . '?redirect=' . $callbackUrl . '?grandidsession=' . $sessionId;
+        }
     }
 }
