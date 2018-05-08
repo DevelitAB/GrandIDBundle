@@ -270,7 +270,7 @@ class GrandID
     {
         $path = $protocol . '://' . $host;
         
-        if (is_null($callbackUrl)) {
+        if (empty($callbackUrl)) {
             return $path . '?redirect=null';
         } else {
             return $path . '?redirect=' . $callbackUrl . '?grandidsession=' . $sessionId;
