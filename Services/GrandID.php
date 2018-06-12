@@ -154,10 +154,11 @@ class GrandID
         if (property_exists($decodedResponseBody, 'username')) {
             $responseSessionId = $decodedResponseBody->sessionId;
             $username = $decodedResponseBody->username;
+            $name = $decodedResponseBody->userAttributes->name;
 
             $this->enableSession($responseSessionId, $username);
 
-            $output = new SuccessfulSession($responseSessionId, $username);
+            $output = new SuccessfulSession($responseSessionId, $username, $name);
         }
 
         return $output;
@@ -170,7 +171,9 @@ class GrandID
         $session = $this->getMockSessionFromStorage($sessionId);
 
         if ($session && !is_null($session->getUsername()) && $session->getIsLoggedIn()) {
-            $output = new SuccessfulSession($session->getExternalId(), $session->getUsername());
+            $name = 'Unknown Mocker';
+
+            $output = new SuccessfulSession($session->getExternalId(), $session->getUsername(), $name);
         }
 
         return $output;

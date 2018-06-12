@@ -22,6 +22,7 @@ class SuccessfulSession
         $this
             ->setSessionId($sessionId)
             ->setUsername($username)
+            ->setName($name)
         ;
     }
 
