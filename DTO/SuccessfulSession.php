@@ -10,9 +10,13 @@ class SuccessfulSession
     /** @var string */
     private $username;
 
+    /** @var string */
+    private $name;
+
     public function __construct(
         string  $sessionId = '',
-        string  $username = ''
+        string  $username = '',
+        string  $name = ''
     )
     {
         $this
@@ -57,6 +61,26 @@ class SuccessfulSession
     public function setUsername(string $username): SuccessfulSession
     {
         $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return SuccessfulSession
+     */
+    public function setName(string $name): SuccessfulSession
+    {
+        $this->name = $name;
 
         return $this;
     }
