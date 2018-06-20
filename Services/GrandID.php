@@ -36,9 +36,8 @@ class GrandID
     private $entityManager;
 
     /**
-     * SlackBot constructor.
-     *
      * @param array $config
+     * @param EntityManagerInterface $entityManager
      */
     public function __construct(array $config, EntityManagerInterface $entityManager)
     {
