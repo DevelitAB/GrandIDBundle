@@ -1,10 +1,10 @@
 <?php
 
-namespace Bsadnu\GrandIDBundle\Services;
+namespace DevelitAB\GrandIDBundle\Services;
 
-use Bsadnu\GrandIDBundle\DTO\FederatedLogin;
-use Bsadnu\GrandIDBundle\DTO\SuccessfulSession;
-use Bsadnu\GrandIDBundle\Entity\GrandIdSession;
+use DevelitAB\GrandIDBundle\DTO\FederatedLogin;
+use DevelitAB\GrandIDBundle\DTO\SuccessfulSession;
+use DevelitAB\GrandIDBundle\Entity\GrandIdSession;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client as HttpClient;
 
