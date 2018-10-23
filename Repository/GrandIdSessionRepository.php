@@ -1,8 +1,8 @@
 <?php
 
-namespace Bsadnu\GrandIDBundle\Repository;
+namespace DevelitAB\GrandIDBundle\Repository;
 
-use Bsadnu\GrandIDBundle\Entity\GrandIdSession;
+use DevelitAB\GrandIDBundle\Entity\GrandIdSession;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
