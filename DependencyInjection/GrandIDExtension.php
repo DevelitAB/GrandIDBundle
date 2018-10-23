@@ -1,6 +1,6 @@
 <?php
 
-namespace Bsadnu\GrandIDBundle\DependencyInjection;
+namespace DevelitAB\GrandIDBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -14,7 +14,7 @@ class GrandIDExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('bsadnu.grand_id.config', $config);
+        $container->setParameter('develit_ab.grand_id.config', $config);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
