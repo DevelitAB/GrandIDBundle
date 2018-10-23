@@ -1,6 +1,6 @@
 <?php
 
-namespace Bsadnu\GrandIDBundle\DTO;
+namespace DevelitAB\GrandIDBundle\DTO;
 
 class FederatedLogin
 {
