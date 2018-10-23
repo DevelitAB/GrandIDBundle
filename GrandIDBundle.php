@@ -1,6 +1,6 @@
 <?php
 
-namespace Bsadnu\GrandIDBundle;
+namespace DevelitAB\GrandIDBundle;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
