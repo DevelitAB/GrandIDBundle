@@ -1,13 +1,13 @@
 services:
-    bsadnu.grand_id:
-        alias: Bsadnu\GrandIDBundle\Services\GrandID
+    develit_ab.grand_id:
+        alias: DevelitAB\GrandIDBundle\Services\GrandID
         public: true
-    Bsadnu\GrandIDBundle\Repository\GrandIdSessionRepository:
+    DevelitAB\GrandIDBundle\Repository\GrandIdSessionRepository:
         autowire: true
         public: false
         tags: ['doctrine.repository_service']        
-    Bsadnu\GrandIDBundle\Services\GrandID:
+    DevelitAB\GrandIDBundle\Services\GrandID:
         public: false
         arguments:
-            - '%bsadnu.grand_id.config%'
+            - '%develit_ab.grand_id.config%'
             - '@doctrine.orm.entity_manager'
