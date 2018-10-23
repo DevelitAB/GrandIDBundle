@@ -1,9 +1,9 @@
 Grand ID Symfony Bundle
 ===============================
 
-[![Latest Stable Version](https://poser.pugx.org/bsadnu/grand-id-bundle/v/stable)](https://packagist.org/packages/bsadnu/grand-id-bundle) 
-[![Total Downloads](https://poser.pugx.org/bsadnu/grand-id-bundle/downloads)](https://packagist.org/packages/bsadnu/grand-id-bundle) 
-[![License](https://poser.pugx.org/bsadnu/grand-id-bundle/license)](https://packagist.org/packages/bsadnu/grand-id-bundle)
+[![Latest Stable Version](https://poser.pugx.org/develit-ab/grand-id-bundle/v/stable)](https://packagist.org/packages/develit-ab/grand-id-bundle) 
+[![Total Downloads](https://poser.pugx.org/develit-ab/grand-id-bundle/downloads)](https://packagist.org/packages/develit-ab/grand-id-bundle) 
+[![License](https://poser.pugx.org/develit-ab/grand-id-bundle/license)](https://packagist.org/packages/develit-ab/grand-id-bundle)
 
 This extension provides a number of service methods necessary for working with [Grand ID API](https://www.grandid.com/documentation/). All sessions data are stored in database.
 
@@ -19,7 +19,7 @@ There are so-called mock system which is helpful for testing purposes. Mock-meth
 Open a command console, enter your project directory and execute:
 
 ```console
-$ composer require bsadnu/grand-id-bundle
+$ composer require develit-ab/grand-id-bundle
 ```
 
 #### Applications that don't use Symfony Flex
@@ -31,7 +31,7 @@ Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
 
 ```console
-$ composer require bsadnu/grand-id-bundle
+$ composer require develit-ab/grand-id-bundle
 ```
 
 This command requires you to have Composer installed globally, as explained
@@ -54,7 +54,7 @@ class AppKernel extends Kernel
     {
         $bundles = array(
             // ...
-            new Bsadnu\GrandIDBundle\GrandIDBundle(),
+            new DevelitAB\GrandIDBundle\GrandIDBundle(),
         );
 
         // ...
@@ -99,7 +99,7 @@ class SomeController extends Controller
 
     public function __construct(ContainerInterface $container)
     {
-        $this->bankIdProvider = $container->get('bsadnu.grand_id');
+        $this->bankIdProvider = $container->get('develit_ab.grand_id');
     }
     
     public function doSomething()
@@ -128,6 +128,3 @@ class SomeController extends Controller
 * `getSession(string $sessionId)` - fetch session params by calling real API GetSession.
 * `getSessionMock(string $sessionId)` - fetch mock session params by from DB.
 * `enableMockSession(string $sessionId, string $username)` - update mock session DB record by adding username and making is_logged_in equals to true.
-
-## Acknowledgments
-* [Develit Software Development](https://www.develit.se)
