@@ -1,11 +1,11 @@
 <?php
 
-namespace Bsadnu\GrandIDBundle\Entity;
+namespace DevelitAB\GrandIDBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Bsadnu\GrandIDBundle\Repository\GrandIdSessionRepository")
+ * @ORM\Entity(repositoryClass="DevelitAB\GrandIDBundle\Repository\GrandIdSessionRepository")
  */
 class GrandIdSession
 {
