@@ -1,5 +1,5 @@
 {
-  "name": "bsadnu/grand-id-bundle",
+  "name": "develit-ab/grand-id-bundle",
   "description": "Symfony bundle to use Grand ID service https://www.grandid.com/",
   "keywords": ["Grand ID", "symfony"],
   "type": "symfony-bundle",
@@ -18,7 +18,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Bsadnu\\GrandIDBundle\\": ""
+      "DevelitAB\\GrandIDBundle\\": ""
     }
   }
 }
